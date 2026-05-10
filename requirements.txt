@@ -1,0 +1,8 @@
+PyQt6
+groq
+sounddevice
+soundfile
+numpy
+keyboard
+openai
+anthropic
