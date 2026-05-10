@@ -1,7 +1,7 @@
 <div align="center">
 
 **🌐 Read in your language:**&nbsp;&nbsp;
-🇺🇸 English &nbsp;|&nbsp; [🇧🇷 Português](README.pt.md) &nbsp;|&nbsp; [🇯🇵 日本語](README.ja.md) &nbsp;|&nbsp; [🇳🇱 Nederlands](README.nl.md)
+🇺🇸 English &nbsp;|&nbsp; [🇧🇷 Português](README.pt.md) &nbsp;|&nbsp; [🇪🇸 Español](README.es.md) &nbsp;|&nbsp; [🇯🇵 日本語](README.ja.md) &nbsp;|&nbsp; [🇳🇱 Nederlands](README.nl.md)
 
 ---
 
@@ -184,3 +184,4 @@ Built by [Weslley Harakawa](https://github.com/WeslleyHarakawa) using [Antigravi
 *If KoeScribe AI saved you time, consider buying me a coffee — it keeps this project alive! ☕*
 
 </div>
+
