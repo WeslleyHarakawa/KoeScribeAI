@@ -4,7 +4,7 @@
 ; ============================================================
 
 #define MyAppName "KoeScribe AI"
-#define MyAppVersion "1.0.3"
+#define MyAppVersion "1.0.4"
 #define MyAppPublisher "Weslley Harakawa"
 #define MyAppURL "https://github.com/WeslleyHarakawa/KoeScribeAI"
 #define MyAppSupportURL "https://buymeacoffee.com/weslleyaharakawa"

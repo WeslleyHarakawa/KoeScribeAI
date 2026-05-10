@@ -187,7 +187,7 @@ class RecorderApp(QWidget):
         self.config = {
             "provider": "Groq", 
             "keys": {"Groq": "", "OpenAI": "", "Anthropic": ""}, 
-            "language": "Portuguese (Brazil)",
+            "language": "English (USA)",
             "ui_language": "English"
         }
         if os.path.exists(self.config_path):
@@ -199,7 +199,7 @@ class RecorderApp(QWidget):
                 pass
         
         if "language" not in self.config:
-            self.config["language"] = "Portuguese (Brazil)"
+            self.config["language"] = "English (USA)"
         if "ui_language" not in self.config:
             self.config["ui_language"] = "English"
         
