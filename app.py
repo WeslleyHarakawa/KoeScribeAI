@@ -642,33 +642,24 @@ class RecorderApp(QWidget):
             key = self.config["keys"].get(provider, "")
             
             lang_sel = self.config.get("language", "Portuguese (Brazil)")
-            lang_code = "pt"
-            prompt_text = "Transcreva em português do Brasil. O texto é ditado."
-            
-            if lang_sel == "Portuguese (Brazil)":
-                lang_code = "pt"
-                prompt_text = "Transcreva em português do Brasil. O texto é ditado."
-            elif lang_sel == "Portuguese (Portugal)":
-                lang_code = "pt"
-                prompt_text = "Transcreva em português de Portugal. O texto é ditado."
-            elif lang_sel == "English (USA)":
-                lang_code = "en"
-                prompt_text = "Transcribe in American English. The text is dictated."
-            elif lang_sel == "English (British)":
-                lang_code = "en"
-                prompt_text = "Transcribe in British English. The text is dictated."
-            elif lang_sel == "Spanish (Latin America)":
-                lang_code = "es"
-                prompt_text = "Transcribe en español de América Latina. El texto es dictado."
-            elif lang_sel == "Spanish (Spain)":
-                lang_code = "es"
-                prompt_text = "Transcribe en español de España. El texto es dictado."
-            elif lang_sel == "Japanese":
-                lang_code = "ja"
-                prompt_text = "日本語で書き起こしてください。音声入力です。"
-            elif lang_sel == "Chinese":
-                lang_code = "zh"
-                prompt_text = "请用简体中文进行转录。这是语音输入。"
+
+            # Full language mapping — every entry in AUDIO_LANG_KEYS must be here
+            LANG_MAP = {
+                "Portuguese (Brazil)":    ("pt", "Transcreva em português do Brasil. O texto é ditado."),
+                "Portuguese (Portugal)":  ("pt", "Transcreva em português de Portugal. O texto é ditado."),
+                "English (USA)":          ("en", "Transcribe in American English. The text is dictated."),
+                "English (British)":      ("en", "Transcribe in British English. The text is dictated."),
+                "Spanish (Latin America)":("es", "Transcribe en español de América Latina. El texto es dictado."),
+                "Spanish (Spain)":        ("es", "Transcribe en español de España. El texto es dictado."),
+                "Japanese":               ("ja", "日本語で書き起こしてください。音声入力です。"),
+                "Chinese":                ("zh", "请用简体中文进行转录。这是语音输入。"),
+                "French":                 ("fr", "Transcrivez en français. Le texte est dicté."),
+                "German":                 ("de", "Transkribieren Sie auf Deutsch. Der Text wird diktiert."),
+                "Italian":                ("it", "Trascrivi in italiano. Il testo è dettato."),
+                "Dutch":                  ("nl", "Transcribeer in het Nederlands. De tekst wordt gedicteerd."),
+                "Russian":                ("ru", "Транскрибируйте на русском языке. Текст продиктован."),
+            }
+            lang_code, prompt_text = LANG_MAP.get(lang_sel, ("pt", "Transcreva em português do Brasil."))
             
             text = ""
             if provider == "Groq":
