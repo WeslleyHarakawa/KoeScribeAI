@@ -210,10 +210,10 @@ class RecorderApp(QWidget):
         key = self.key_input.text()
         ui_lang = self.ui_lang_combo.currentData()  # internal key e.g. "Portuguese"
         
-        # Convert displayed (sorted) lang index back to internal key
-        display_idx = self.lang_combo.currentIndex()
-        sorted_keys = getattr(self, '_sorted_lang_keys', AUDIO_LANG_KEYS)
-        lang_key = sorted_keys[display_idx] if 0 <= display_idx < len(sorted_keys) else "Portuguese (Brazil)"
+        # Read internal key directly from userData — always correct regardless of display order
+        lang_key = self.lang_combo.currentData()
+        if not lang_key:
+            lang_key = "Portuguese (Brazil)"
         
         self.config["provider"] = provider
         self.config["language"] = lang_key
@@ -241,14 +241,15 @@ class RecorderApp(QWidget):
         self.save_btn.setText(t["save"])
         
         # Rebuild lang_combo sorted alphabetically by display name
-        current_key = AUDIO_LANG_KEYS[self.lang_combo.currentIndex()] if self.lang_combo.currentIndex() >= 0 else self.config.get("language", "Portuguese (Brazil)")
+        # Use currentData() to get the saved internal key reliably
+        current_key = self.lang_combo.currentData() or self.config.get("language", "Portuguese (Brazil)")
         display_names = AUDIO_LANG_DISPLAY.get(ui_lang, AUDIO_LANG_DISPLAY["English"])
         sorted_pairs = sorted(zip(display_names, AUDIO_LANG_KEYS), key=lambda x: x[0].lower())
         self.lang_combo.blockSignals(True)
         self.lang_combo.clear()
-        self._sorted_lang_keys = [k for _, k in sorted_pairs]
-        self.lang_combo.addItems([d for d, _ in sorted_pairs])
-        idx = self._sorted_lang_keys.index(current_key) if current_key in self._sorted_lang_keys else 0
+        for display, internal_key in sorted_pairs:
+            self.lang_combo.addItem(display, internal_key)  # userData = internal key
+        idx = next((i for i, (_, k) in enumerate(sorted_pairs) if k == current_key), 0)
         self.lang_combo.setCurrentIndex(idx)
         self.lang_combo.blockSignals(False)
         
@@ -520,14 +521,16 @@ class RecorderApp(QWidget):
                     self.ui_lang_combo.setCurrentIndex(i)
                     break
             self.ui_lang_combo.blockSignals(False)
-            # Set lang_combo to translated name of saved key
+            # Rebuild lang_combo with userData=internal_key — sorted, same as apply_translation
             ui_lang = self.config.get("ui_language", "English")
             lang_key = self.config.get("language", "Portuguese (Brazil)")
             display_names = AUDIO_LANG_DISPLAY.get(ui_lang, AUDIO_LANG_DISPLAY["English"])
-            idx = AUDIO_LANG_KEYS.index(lang_key) if lang_key in AUDIO_LANG_KEYS else 0
+            sorted_pairs = sorted(zip(display_names, AUDIO_LANG_KEYS), key=lambda x: x[0].lower())
             self.lang_combo.blockSignals(True)
             self.lang_combo.clear()
-            self.lang_combo.addItems(display_names)
+            for display, internal_key in sorted_pairs:
+                self.lang_combo.addItem(display, internal_key)  # userData = internal key
+            idx = next((i for i, (_, k) in enumerate(sorted_pairs) if k == lang_key), 0)
             self.lang_combo.setCurrentIndex(idx)
             self.lang_combo.blockSignals(False)
 
